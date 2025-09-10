@@ -35,7 +35,76 @@
 | 30 | inc   | inc r1              | 11110 00001 00000 00000 000000000001 | 0xF8000001 | ALU |
 | 31 | stop  | stop                | 11111 00000 00000 00000 000000000000 | 0xF8000000 | Control |
 
+```mermaid
+flowchart TD
+    A[SRC Instruction Set Architecture<br>32 Instructions]
 
+    A --> T[Instruction Types]
+    
+    T --> CTRL[Control Flow]
+    T --> DATA[Data Transfer]
+    T --> ALU[Arithmetic & Logic]
+    T --> SHIFT[Shift & Rotate]
+
+    subgraph CTRL [Control Flow Instructions]
+        direction LR
+        CTRL_0["0: nop"]
+        CTRL_8["8: br rC, target"]
+        CTRL_9["9: brl r5, r6, r7"]
+        CTRL_16["16: cmp r1, r2"]
+        CTRL_31["31: stop"]
+    end
+
+    subgraph DATA [Data Transfer & Addressing Instructions]
+        direction LR
+        DATA_1["1: ld r1, 32"]
+        DATA_2["2: ldr r4, 16(rel)"]
+        DATA_3["3: st r5, 20(r6)"]
+        DATA_4["4: str r7, 12(rel)"]
+        DATA_5["5: la r8, 40"]
+        DATA_6["6: lar r9, 8(rel)"]
+        DATA_17["17: mov r3, r4"]
+        DATA_18["18: swp r5, r6"]
+    end
+
+    subgraph ALU [Arithmetic & Logic Instructions]
+        direction LR
+        ALU_7["7: mul r1, r2, r3"]
+        ALU_10["10: div r4, r5, r6"]
+        ALU_11["11: mod r7, r8, r9"]
+        ALU_12["12: add r1, r2, r3"]
+        ALU_13["13: addi r4, r5, #10"]
+        ALU_14["14: sub r6, r7, r8"]
+        ALU_15["15: neg r9, r10"]
+        ALU_19["19: xor r7, r8, r9"]
+        ALU_20["20: and r1, r2, r3"]
+        ALU_21["21: andi r4, r5, #7"]
+        ALU_22["22: or r6, r7, r8"]
+        ALU_23["23: ori r9, r10, #15"]
+        ALU_24["24: not r1, r2"]
+        ALU_25["25: xori r4, r5, #3"]
+        ALU_30["30: inc r1"]
+    end
+
+    subgraph SHIFT [Shift & Rotate Instructions]
+        direction LR
+        SHIFT_26["26: shr r3, r4, r5"]
+        SHIFT_27["27: shra r1, r2, r3"]
+        SHIFT_28["28: shl r6, r7, r8"]
+        SHIFT_29["29: shc r1, r2, r3"]
+    end
+
+    %% Styling
+    classDef ctrl fill:#f57f17,stroke:#000,color:#000;
+    classDef data fill:#0d47a1,stroke:#fff,color:#fff;
+    classDef alu fill:#1b5e20,stroke:#fff,color:#fff;
+    classDef shift fill:#ff6f00,stroke:#fff,color:#fff;
+
+    class CTRL_0,CTRL_8,CTRL_9,CTRL_16,CTRL_31 ctrl;
+    class DATA_1,DATA_2,DATA_3,DATA_4,DATA_5,DATA_6,DATA_17,DATA_18 data;
+    class ALU_7,ALU_10,ALU_11,ALU_12,ALU_13,ALU_14,ALU_15,ALU_19,ALU_20,ALU_21,ALU_22,ALU_23,ALU_24,ALU_25,ALU_30 alu;
+    class SHIFT_26,SHIFT_27,SHIFT_28,SHIFT_29 shift;
+```
 ```mermaid
 flowchart LR
     A[SRC Instruction Set - Full 32 Unique Opcodes] --> B0[Opcode 0: nop]
